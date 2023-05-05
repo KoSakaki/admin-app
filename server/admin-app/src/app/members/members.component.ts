@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../member';
 import { MemberService } from '../member.service';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-members',
@@ -12,7 +13,10 @@ export class MembersComponent implements OnInit {
   members: Member[] | undefined;
   selectedMember: Member | undefined;
 // dependency Injection(DI)
-  constructor(private memberService: MemberService) { }
+  constructor(
+    private memberService: MemberService,
+    private messageService: MessageService
+    ) { }
 
   // ライフサイクルメソッド
   ngOnInit(): void {
@@ -22,6 +26,7 @@ export class MembersComponent implements OnInit {
   onSelect(member: Member): void {
     this.selectedMember = member;
     // console.log(this.selectedMember);
+    this.messageService.add(`MembersComponent: 社員データ(id=${member.id})が選択されました！`);
   }
 
   getMembers(): void {
