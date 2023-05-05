@@ -11,26 +11,17 @@ import { MessageService } from '../message.service';
 export class MembersComponent implements OnInit {
 
   members: Member[] | undefined;
-  selectedMember: Member | undefined;
-// dependency Injection(DI)
-  constructor(
-    private memberService: MemberService,
-    private messageService: MessageService
-    ) { }
+  // dependency Injection(DI)
+  constructor(private memberService: MemberService) { }
 
   // ライフサイクルメソッド
   ngOnInit(): void {
     this.getMembers();
   }
 
-  onSelect(member: Member): void {
-    this.selectedMember = member;
-    // console.log(this.selectedMember);
-    this.messageService.add(`MembersComponent: 社員データ(id=${member.id})が選択されました！`);
-  }
 
   getMembers(): void {
     this.memberService.getMembers() // Observable
-    .subscribe(members => this.members = members);
+      .subscribe(members => this.members = members);
   }
 }
