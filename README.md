@@ -7,3 +7,8 @@ $ docker-compose up -d
 $ docker-compose exec node npm start
 ```
 http://localhost:4200
+
+## shell
+```
+$ docker-compose exec node bash
+```

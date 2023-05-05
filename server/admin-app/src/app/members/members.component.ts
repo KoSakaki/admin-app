@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../member';
-
-import {MEMBERS} from '../mock-members';
+import { MemberService } from '../member.service';
 
 @Component({
   selector: 'app-members',
@@ -10,24 +9,23 @@ import {MEMBERS} from '../mock-members';
 })
 export class MembersComponent implements OnInit {
 
-  members = MEMBERS;
-  member: Member = {
-    id: 1,
-    name: '田中太郎'
-  };
-
+  members: Member[] | undefined;
   selectedMember: Member | undefined;
+// dependency Injection(DI)
+  constructor(private memberService: MemberService) { }
 
-  constructor() {
-  }
-
+  // ライフサイクルメソッド
   ngOnInit(): void {
-
+    this.getMembers();
   }
 
   onSelect(member: Member): void {
     this.selectedMember = member;
-    console.log(this.selectedMember);
+    // console.log(this.selectedMember);
   }
 
+  getMembers(): void {
+    this.memberService.getMembers() // Observable
+    .subscribe(members => this.members = members);
+  }
 }
