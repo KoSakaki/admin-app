@@ -10,7 +10,7 @@ import { MessageService } from '../message.service';
 })
 export class MembersComponent implements OnInit {
 
-  members: Member[] | undefined;
+  members: Member[] = [];
   // dependency Injection(DI)
   constructor(private memberService: MemberService) { }
 

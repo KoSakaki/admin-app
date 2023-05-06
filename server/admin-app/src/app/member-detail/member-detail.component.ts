@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  @Input() member: Member | undefined;
+  @Input() member: Member;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,7 +23,6 @@ export class MemberDetailComponent implements OnInit {
   }
   getMember(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    console.log(id);
     this.memberService.getMember(id)
       .subscribe(member => this.member = member);
   }
@@ -31,4 +30,10 @@ export class MemberDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    this.memberService.updateMember(this.member)
+      .subscribe(() => this.goBack());
+  }
+
 }
