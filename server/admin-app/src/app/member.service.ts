@@ -48,7 +48,19 @@ export class MemberService {
         tap(_ => this.log(`社員データ(${member.id})を変更しました。`)),
         catchError(this.handleError<any>('updateMember'))
       )
+  }
 
+  searchMembers(term: string): Observable<Member[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
+    return this.http.get<Member[]>(`${this.membersUrl}/?name=${term}`)
+      .pipe(
+        tap(x => x.length ?
+          this.log(`社員データ(${term})を検索しました。`) :
+          this.log(`社員データ(${term})は見つかりませんでした。`)),
+        catchError(this.handleError<Member[]>('searchMembers', []))
+      );
   }
 
   private log(message: string) {
